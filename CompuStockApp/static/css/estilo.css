@@ -1,0 +1,30 @@
+/* Fondo, color de letra y fuente*/
+body {
+    background-color: #052659;
+    color: white;
+    font-family: Arial, sans-serif; 
+}
+
+/*NAVBAR*/
+/* Color del Navbar */
+.navbar.bg-body-tertiary {
+    background-color: #021024 !important;
+    
+}
+/* Color del texto del navbar*/
+.navbar .navbar-nav .nav-link {
+    color: white !important;
+}
+
+/*DROPDOWN*/
+/* Cambiar fondo y color de letra en el dropdown */
+.nav-item.dropdown .dropdown-menu {
+    background-color: #5463b3;
+}
+.nav-item.dropdown .dropdown-item {
+    color: white;
+}
+/* Cambiar color al pasar el ratón por encima */
+.nav-item.dropdown .dropdown-item:hover {
+    background-color: #021024; /* Color ligeramente más oscuro al hover */
+}

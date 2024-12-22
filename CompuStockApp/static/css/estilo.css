@@ -22,6 +22,13 @@ body {
     height: auto; /* Mantén la proporción de la imagen */
 }
 
+/*Logo1*/
+.custom-logo {
+    max-width: 250px; /* Ajusta el tamaño máximo del logo */
+    width: 50%; /* Hace que el logo sea responsivo */
+    height: auto; /* Mantiene la proporción del logo */
+}
+
 /*DROPDOWN*/
 /* Cambiar fondo y color de letra en el dropdown */
 .nav-item.dropdown .dropdown-menu {
@@ -104,3 +111,5 @@ footer li {
 footer .list-inline-item {
     margin-right: 15px;
 }
+
+

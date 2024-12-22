@@ -13,44 +13,58 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="{% static 'img/logo2.png' %}" alt="Logo" class="navbar-logo">
+      <div class="container-fluid">
+          <!-- Logo -->
+          <a class="navbar-brand" href="{% url 'index' %}">
+              <img src="{% static 'img/logo2.png' %}" alt="Logo" class="navbar-logo">
           </a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Categorías
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Hardware</a></li>
-                  <li><a class="dropdown-item" href="#">Periféricos</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Accesorios</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Ofertas</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Soporte</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Quiénes somos</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Buscar Producto" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </form>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <!-- Enlace a Inicio -->
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Inicio</a>
+                  </li>
+                  <!-- Dropdown de Categorías -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Categorías
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'hardware' %}">Hardware</a></li>
+                          <li><a class="dropdown-item" href="{% url 'perifericos' %}">Periféricos</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="{% url 'accesorios' %}">Accesorios</a></li>
+                      </ul>
+                  </li>
+                  <!-- Enlace a Ofertas -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'ofertas' %}">Ofertas</a>
+                  </li>
+                  <!-- Enlace a Soporte -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'soporte' %}">Soporte</a>
+                  </li>
+                  <!-- Enlace a Quiénes somos -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'nosotros' %}">Quiénes somos</a>
+                  </li>
+                  <!-- Enlace a la Cuenta/Login -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Cuenta</a>
+                  </li>
+              </ul>
+              <!-- Formulario de búsqueda -->
+              <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Buscar Producto" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+              </form>
           </div>
-        </div>
-      </nav>
-      <br>
+      </div>
+  </nav>
+  
+  
+  
+      <br><br><br><br><br>
       <div class="titulo">
         <h1>CompuStock</h1>
         <h2>Todo en hardware, periféricos y accesorios</h2>

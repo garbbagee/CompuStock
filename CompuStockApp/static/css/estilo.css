@@ -3,6 +3,7 @@ body {
     background-color: #052659;
     color: white;
     font-family: Arial, sans-serif; 
+    
 }
 
 /*NAVBAR*/
@@ -16,6 +17,11 @@ body {
     color: white !important;
 }
 
+.navbar-logo {
+    width: 26px; /* Ajusta el tamaño del logo */
+    height: auto; /* Mantén la proporción de la imagen */
+}
+
 /*DROPDOWN*/
 /* Cambiar fondo y color de letra en el dropdown */
 .nav-item.dropdown .dropdown-menu {
@@ -27,4 +33,74 @@ body {
 /* Cambiar color al pasar el ratón por encima */
 .nav-item.dropdown .dropdown-item:hover {
     background-color: #021024; /* Color ligeramente más oscuro al hover */
+}
+
+/* Efecto de bombeo */
+@keyframes bombear {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02); /* Leve aumento */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* TÍTULO */
+.titulo {
+    text-align: center; /* Centra el texto horizontalmente */
+    display: flex; /* Flexbox para facilitar la alineación */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    flex-wrap: wrap; /* Permite que los títulos se ajusten en pantallas pequeñas */
+}
+
+.titulo h1 {
+    font-size: 3vw; /* Ajusta el tamaño según el ancho de la pantalla */
+    font-weight: bold;
+    color: #00aaff; /* Azul claro para destacar */
+    animation: bombear 1.5s ease-in-out infinite; /* Animación de bombeo */
+    margin-right: 24px; /* Separar el título principal del subtítulo */
+    max-width: 600px; /* Limita el tamaño máximo en pantallas grandes */
+}
+
+.titulo h2 {
+    font-size: 2vw; /* Ajusta el tamaño según el ancho de la pantalla */
+    font-weight: normal;
+    color: #aadfff; /* Azul más suave para complementar */
+    animation: bombear 1.5s ease-in-out infinite; /* Animación de bombeo */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .titulo h1 {
+        font-size: 8vw; /* Título más grande en pantallas más pequeñas */
+        margin-right: 0; /* Sin margen para pantallas pequeñas */
+    }
+
+    .titulo h2 {
+        font-size: 5vw; /* Subtítulo ajustado */
+    }
+}
+
+
+/*FOOTER*/
+footer h5 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+footer ul {
+    padding: 0;
+}
+
+footer li {
+    margin-bottom: 0.5rem;
+}
+
+footer .list-inline-item {
+    margin-right: 15px;
 }

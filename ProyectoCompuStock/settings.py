@@ -122,3 +122,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuración del modelo de usuario personalizado
+AUTH_USER_MODEL = 'CompuStockApp.UserProfile'  # Asegúrate de cambiar 'app' por el nombre de tu app
+
+# Backend de autenticación personalizado
+AUTHENTICATION_BACKENDS = ['path.to.backend.CustomAuthBackend']  # Asegúrate de usar el path correcto

@@ -3,14 +3,12 @@ body {
     background-color: #052659;
     color: white;
     font-family: Arial, sans-serif; 
-    
 }
 
 /*NAVBAR*/
 /* Color del Navbar */
 .navbar.bg-body-tertiary {
     background-color: #021024 !important;
-    
 }
 /* Color del texto del navbar*/
 .navbar .navbar-nav .nav-link {
@@ -27,6 +25,16 @@ body {
     max-width: 250px; /* Ajusta el tamaño máximo del logo */
     width: 50%; /* Hace que el logo sea responsivo */
     height: auto; /* Mantiene la proporción del logo */
+    margin: 0 auto; /* Centra el logo horizontalmente */
+}
+
+/*Logo inferior*/
+.logo-inferior {
+    max-width: 250px;
+    width: 50%;
+    height: auto;
+    margin: 20px auto 0 auto; /* Centrado con margen superior */
+    display: block;
 }
 
 /*DROPDOWN*/
@@ -93,7 +101,6 @@ body {
     }
 }
 
-
 /*FOOTER*/
 footer h5 {
     font-size: 1.25rem;
@@ -112,4 +119,35 @@ footer .list-inline-item {
     margin-right: 15px;
 }
 
+/*LOGIN*/
+/* Contenedor del formulario de inicio de sesión */
+.login-container {
+    padding-top: 14px; /* Espacio más pequeño */
+    margin-top: 40px; /* Añade espacio superior para separarlo del navbar */
 
+}
+
+/* Formulario */
+.card {
+    border: none; /* Elimina el borde para un diseño más limpio */
+    margin-bottom: 20px; /* Espacio entre el formulario y el logo */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .logo-inferior {
+        max-width: 150px; /* Tamaño más pequeño en pantallas pequeñas */
+        width: 70%; /* Ajusta el tamaño relativo */
+    }
+}
+.logo-inferior {
+    max-width: 200px; /* Tamaño máximo para pantallas grandes */
+    width: 40%; /* Proporción adaptable */
+    height: auto; /* Mantiene la proporción del logo */
+    margin: 10px auto 0; /* Espacio superior para separarlo del formulario */
+    display: block; /* Centrado */
+}
+
+    .card-body {
+        padding: 20px; /* Ajusta el relleno para pantallas pequeñas */
+    }

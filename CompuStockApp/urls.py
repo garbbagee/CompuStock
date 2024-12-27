@@ -24,4 +24,8 @@ urlpatterns = [
     
     # Soporte
     path('soporte/', views.soporte, name='soporte'),
+
+    # Inventario CRUD
+    path('inventario/', views.inventario, name='inventario'),
+
 ]

@@ -3,12 +3,20 @@ body {
     background-color: #052659;
     color: white;
     font-family: Arial, sans-serif; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    margin: 0;
+    margin-bottom: 0; /* Sin espacio adicional en la parte inferior */
+
 }
 
 /*NAVBAR*/
 /* Color del Navbar */
 .navbar.bg-body-tertiary {
     background-color: #021024 !important;
+    margin-bottom: 20px; /* Espacio entre el navbar y el contenido */
+
 }
 /* Color del texto del navbar*/
 .navbar .navbar-nav .nav-link {
@@ -30,10 +38,10 @@ body {
 
 /*Logo inferior*/
 .logo-inferior {
-    max-width: 250px;
-    width: 50%;
+    max-width: 150px; /* Ajusta el tamaño máximo según sea necesario */
+    width: auto; /* Asegura que mantenga proporción */
     height: auto;
-    margin: 20px auto 0 auto; /* Centrado con margen superior */
+    margin: 20px auto 0; /* Espaciado justo debajo del formulario */
     display: block;
 }
 
@@ -102,6 +110,7 @@ body {
 }
 
 /*FOOTER*/
+
 footer h5 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
@@ -122,9 +131,11 @@ footer .list-inline-item {
 /*LOGIN*/
 /* Contenedor del formulario de inicio de sesión */
 .login-container {
-    padding-top: 14px; /* Espacio más pequeño */
-    margin-top: 40px; /* Añade espacio superior para separarlo del navbar */
+    padding-bottom: 0;
 
+    padding: 44px; /* Espaciado interno */
+    margin-top: 16px; /* Espaciado superior ajustado */
+    margin-bottom: 0; /* Sin espacio inferior */
 }
 
 /* Formulario */
@@ -141,10 +152,11 @@ footer .list-inline-item {
     }
 }
 .logo-inferior {
-    max-width: 200px; /* Tamaño máximo para pantallas grandes */
+    max-width: 200px; /* Tamaño máximo del logo */
     width: 40%; /* Proporción adaptable */
-    height: auto; /* Mantiene la proporción del logo */
-    margin: 10px auto 0; /* Espacio superior para separarlo del formulario */
+    height: auto; /* Mantener proporción del logo */
+    margin-top: 10px; /* Espacio pequeño entre el formulario y el logo */
+    margin-bottom: 0; /* Eliminar espacio adicional inferior */
     display: block; /* Centrado */
 }
 

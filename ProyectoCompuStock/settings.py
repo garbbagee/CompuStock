@@ -127,4 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'CompuStockApp.UserProfile'  # Asegúrate de cambiar 'app' por el nombre de tu app
 
 # Backend de autenticación personalizado
-AUTHENTICATION_BACKENDS = ['path.to.backend.CustomAuthBackend']  # Asegúrate de usar el path correcto
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Este es el backend predeterminado
+]

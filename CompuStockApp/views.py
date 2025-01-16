@@ -2,6 +2,9 @@ from django.shortcuts import render,get_object_or_404, redirect
 from .models import Producto
 from .forms import ProductoForm
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
+from .forms import RegistroForm, LoginForm
+
 # Vista para la página principal
 def index(request):
     return render(request, 'html/index.html')
@@ -10,13 +13,45 @@ def index(request):
 def nosotros(request):
     return render(request, 'html/nosotros.html')
 
-# Vista para el login
 def login_view(request):
-    return render(request, 'html/login.html')
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        
+        user = authenticate(request, username=username, password=password)
 
-# Vista para el registro de un nuevo usuario
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Has iniciado sesión exitosamente.")
+            return redirect("index")  # Redirige al inicio o donde prefieras
+        else:
+            messages.error(request, "Credenciales incorrectas. Intenta de nuevo.")
+    
+    return render(request, "html/login.html")
+
+
+# Vista para el registro de usuarios
 def register_view(request):
-    return render(request, 'html/registro.html')
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            # Crear el usuario con los datos del formulario
+            user = form.save()
+            
+            # Autenticar e iniciar sesión automáticamente
+            user = authenticate(username=user.username, password=form.cleaned_data['password1'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Usuario registrado e iniciado sesión exitosamente.")
+                return redirect('index')  # Redirige a la página principal después del registro
+            else:
+                messages.error(request, "Hubo un error al autenticar el usuario.")
+        else:
+            messages.error(request, "Por favor corrige los errores en el formulario.")
+    else:
+        form = RegistroForm()
+    return render(request, 'html/registro.html', {'form': form})
+
 
 # Vista para la categoría de Hardware
 def hardware(request):

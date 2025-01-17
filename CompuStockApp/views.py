@@ -3,7 +3,7 @@ from .models import Producto
 from .forms import ProductoForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from .forms import RegistroForm, LoginForm
+from .forms import RegistroForm, LoginForm, ProductoForm
 
 # Vista para la página principal
 def index(request):
@@ -75,41 +75,50 @@ def soporte(request):
 
 
 def inventario(request):
-    # Mostrar todos los productos
     productos = Producto.objects.all()
 
+    # Si el formulario es para crear un nuevo producto
+    create_form = ProductoForm()
+
+    # Verificamos si hay un producto_id en la solicitud, lo que significa que estamos editando
+    producto = None
+    producto_id = request.POST.get('producto_id')  # Obtenemos el ID del producto
+    if producto_id:
+        producto = get_object_or_404(Producto, pk=producto_id)
+        create_form = ProductoForm(instance=producto)  # Rellenar el formulario con los datos actuales del producto
+
     if request.method == 'POST':
-        # Crear producto (C)
         if 'create' in request.POST:
+            # Crear producto
             form = ProductoForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Producto creado exitosamente.")
                 return redirect('inventario')
-        
-        # Editar producto (U)
+            else:
+                messages.error(request, "Error al crear el producto. Revisa los datos.")
+                print(form.errors)
+
         elif 'edit' in request.POST:
-            producto_id = request.POST.get('producto_id')
-            producto = get_object_or_404(Producto, pk=producto_id)
-            form = ProductoForm(request.POST, request.FILES, instance=producto)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Producto actualizado exitosamente.")
-                return redirect('inventario')
+            # Editar producto
+            if producto:
+                form = ProductoForm(request.POST, request.FILES, instance=producto)  # Pasamos la instancia para editar
+                if form.is_valid():
+                    form.save()  # Guardamos los cambios en la base de datos
+                    messages.success(request, "Producto actualizado exitosamente.")
+                    return redirect('inventario')
+                else:
+                    messages.error(request, "Error al actualizar el producto.")
+                    print(form.errors)  # Ver los errores en la terminal si el formulario no es válido
 
-        # Eliminar producto (D)
         elif 'delete' in request.POST:
-            producto_id = request.POST.get('producto_id')
-            producto = get_object_or_404(Producto, pk=producto_id)
-            producto.delete()
-            messages.success(request, "Producto eliminado exitosamente.")
-            return redirect('inventario')
-
-    else:
-        # Formulario vacío para agregar un nuevo producto
-        create_form = ProductoForm()
+            # Eliminar producto
+            if producto:
+                producto.delete()
+                messages.success(request, "Producto eliminado exitosamente.")
+                return redirect('inventario')
 
     return render(request, 'html/inventario.html', {
         'productos': productos,
-        'create_form': create_form,
+        'create_form': create_form,  # Siempre pasa el formulario al contexto
     })

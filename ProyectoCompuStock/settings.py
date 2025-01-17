@@ -130,3 +130,6 @@ AUTH_USER_MODEL = 'CompuStockApp.UserProfile'  # Asegúrate de cambiar 'app' por
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Este es el backend predeterminado
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings  # Importa settings correctamente
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Página principal
@@ -27,5 +29,8 @@ urlpatterns = [
 
     # Inventario CRUD
     path('inventario/', views.inventario, name='inventario'),
-
 ]
+
+# Solo agrega esta línea si estás en modo de desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

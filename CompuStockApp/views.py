@@ -74,51 +74,74 @@ def soporte(request):
     return render(request, 'html/soporte.html')
 
 
+
 def inventario(request):
+    # Obtener todos los productos
     productos = Producto.objects.all()
 
-    # Si el formulario es para crear un nuevo producto
-    create_form = ProductoForm()
+    # Formularios
+    agregar_form = ProductoForm()
+    editar_form = None
+    producto_a_editar = None
 
-    # Verificamos si hay un producto_id en la solicitud, lo que significa que estamos editando
-    producto = None
-    producto_id = request.POST.get('producto_id')  # Obtenemos el ID del producto
-    if producto_id:
-        producto = get_object_or_404(Producto, pk=producto_id)
-        create_form = ProductoForm(instance=producto)  # Rellenar el formulario con los datos actuales del producto
-
+    # Manejar solicitud POST
     if request.method == 'POST':
         if 'create' in request.POST:
-            # Crear producto
-            form = ProductoForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
+            # Agregar un nuevo producto
+            agregar_form = ProductoForm(request.POST, request.FILES)
+            if agregar_form.is_valid():
+                agregar_form.save()
                 messages.success(request, "Producto creado exitosamente.")
                 return redirect('inventario')
             else:
                 messages.error(request, "Error al crear el producto. Revisa los datos.")
-                print(form.errors)
 
         elif 'edit' in request.POST:
             # Editar producto
-            if producto:
-                form = ProductoForm(request.POST, request.FILES, instance=producto)  # Pasamos la instancia para editar
-                if form.is_valid():
-                    form.save()  # Guardamos los cambios en la base de datos
-                    messages.success(request, "Producto actualizado exitosamente.")
-                    return redirect('inventario')
-                else:
-                    messages.error(request, "Error al actualizar el producto.")
-                    print(form.errors)  # Ver los errores en la terminal si el formulario no es válido
+            producto_id = request.POST.get('producto_id')  # Tomamos el ID del producto
+            if producto_id:
+                producto_a_editar = get_object_or_404(Producto, pk=producto_id)
+
+                # Actualizamos solo los campos que hayan sido enviados
+                if 'nombre' in request.POST:
+                    producto_a_editar.nombre = request.POST['nombre']
+                if 'descripcion' in request.POST:
+                    producto_a_editar.descripcion = request.POST['descripcion']
+                if 'especificaciones' in request.POST:
+                    producto_a_editar.especificaciones = request.POST['especificaciones']
+                if 'precio' in request.POST:
+                    producto_a_editar.precio = request.POST['precio']
+                if 'imagen' in request.FILES:
+                    producto_a_editar.imagen = request.FILES['imagen']
+
+                producto_a_editar.save()  # Guardar cambios
+                messages.success(request, "Producto actualizado exitosamente.")
+                return redirect('inventario')
 
         elif 'delete' in request.POST:
             # Eliminar producto
-            if producto:
-                producto.delete()
+            producto_id = request.POST.get('producto_eliminar')
+            if producto_id:
+                producto_a_eliminar = get_object_or_404(Producto, pk=producto_id)
+                producto_a_eliminar.delete()
                 messages.success(request, "Producto eliminado exitosamente.")
                 return redirect('inventario')
 
-    return render(request, 'html/inventario.html', {
+    # Manejar búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+
+    # Manejar la selección de un producto para editar
+    producto_id = request.GET.get('producto_id', None)
+    if producto_id:
+        producto_a_editar = get_object_or_404(Producto, pk=producto_id)
+        editar_form = ProductoForm(instance=producto_a_editar)
+
+    context = {
         'productos': productos,
-        'create_form': create_form,  # Siempre pasa el formulario al contexto
-    })
+        'agregar_form': agregar_form,
+        'editar_form': editar_form,
+        'producto_a_editar': producto_a_editar,
+    }
+    return render(request, 'html/inventario.html', context)

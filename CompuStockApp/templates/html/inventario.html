@@ -1,52 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario</title>
+    <title>Inventario - CompuStock</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'img/logo2.png' %}" alt="Logo" class="navbar-logo">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'hardware' %}">Hardware</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'perifericos' %}">Periféricos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accesorios' %}">Accesorios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ofertas' %}">Ofertas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'soporte' %}">Soporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Cuenta</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<h1>Inventario</h1>
+    <div class="container my-4">
+        <div class="row">
+            <!-- Columna 1: Agregar Producto -->
+            <div class="col-md-6">
+                <h2>Agregar Producto</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ agregar_form.as_p }}
+                    <button type="submit" name="create" class="btn btn-success">Agregar</button>
+                </form>
+            </div>
 
-{% if messages %}
-  <ul>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
+            <!-- Columna 2: Buscar Producto -->
+            <div class="col-md-6">
+                <h2>Buscar Producto</h2>
+                <form method="get">
+                    <input type="text" name="search" placeholder="Buscar por nombre" class="form-control mb-2">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
 
-<!-- Formulario para crear o editar un producto -->
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ create_form.as_p }}
-    
-    {% if create_form.instance.pk %}
-        <!-- Si el formulario tiene un 'pk' (es decir, estamos editando un producto) -->
-        <input type="hidden" name="producto_id" value="{{ create_form.instance.pk }}">
-        <button type="submit" name="edit">Editar Producto</button>
-    {% else %}
-        <button type="submit" name="create">Agregar Producto</button>
-    {% endif %}
-</form>
+                <div class="mt-4">
+                    {% for producto in productos %}
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid rounded-start">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                                    <p class="card-text">{{ producto.descripcion }}</p>
+                                    <p class="card-text"><small class="text-muted">Precio: ${{ producto.precio }}</small></p>
+                                    <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"
+                                    data-producto-id="{{ producto.id }}" data-producto-nombre="{{ producto.nombre }}" 
+                                    data-producto-descripcion="{{ producto.descripcion }}" data-producto-precio="{{ producto.precio }}" 
+                                    data-producto-imagen="{{ producto.imagen.url }}">
+                                    Editar
+                                 </a>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-producto-id="{{ producto.id }}" data-producto-nombre="{{ producto.nombre }}">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No se encontraron productos.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 
-<h2>Productos en Inventario</h2>
-<ul>
-    {% for producto in productos %}
-        <li>
-            {{ producto.nombre }} - {{ producto.precio }} - {{ producto.descripcion }}
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                <button type="submit" name="edit">Editar</button>
-                <button type="submit" name="delete">Eliminar</button>
-            </form>
-        </li>
-    {% empty %}
-        <p>No hay productos en el inventario.</p>
-    {% endfor %}
-</ul>
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar el producto <span id="product-name"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form method="post" id="delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="producto_eliminar" id="producto-id">
+                        <button type="submit" name="delete" class="btn btn-danger">Sí, Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal de edición -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" enctype="multipart/form-data" id="edit-form">
+            {% csrf_token %}
+            <input type="hidden" name="producto_id" id="edit-product-id" value="{{ producto_a_editar.id }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-product-name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="edit-product-name" name="nombre" value="{{ producto_a_editar.nombre }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-product-description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="edit-product-description" name="descripcion" rows="3">{{ producto_a_editar.descripcion }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-product-specifications" class="form-label">Especificaciones</label>
+                        <textarea class="form-control" id="edit-product-specifications" name="especificaciones" rows="3">{{ producto_a_editar.especificaciones }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-product-price" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="edit-product-price" name="precio" value="{{ producto_a_editar.precio }}" min="0" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-product-image" class="form-label">Imagen</label>
+                        <input type="file" class="form-control" id="edit-product-image" name="imagen">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="edit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 CompuStock. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Configurar el modal de eliminación
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var productoId = button.getAttribute('data-producto-id');
+            var productoNombre = button.getAttribute('data-producto-nombre');
+            document.getElementById('producto-id').value = productoId;
+            document.getElementById('product-name').textContent = productoNombre;
+        });
+    </script>
+
+<script>
+    var editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget; // Botón que activó el modal
+    var productoId = button.getAttribute('data-producto-id');
+    var productoNombre = button.getAttribute('data-producto-nombre');
+    var productoDescripcion = button.getAttribute('data-producto-descripcion');
+    var productoPrecio = button.getAttribute('data-producto-precio');
+    var productoImagen = button.getAttribute('data-producto-imagen'); // Si la imagen se necesita cargar en un campo
+
+    // Rellenar los campos del formulario
+    document.getElementById('edit-product-id').value = productoId;
+    document.getElementById('edit-product-name').value = productoNombre;
+    document.getElementById('edit-product-description').value = productoDescripcion;
+    document.getElementById('edit-product-price').value = productoPrecio;
+
+    // Opcional: mostrar la imagen actual si es necesario
+    document.getElementById('edit-product-image').value = '';  // Deja vacío para que el usuario cargue una nueva imagen
+});
+
+
+</script>
 
 </body>
 </html>

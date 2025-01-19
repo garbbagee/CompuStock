@@ -1,4 +1,4 @@
-/* Fondo, color de letra y fuente*/
+/* Fondo, color de letra y fuente */
 body {
     background-color: #052659;
     color: white;
@@ -8,18 +8,15 @@ body {
     min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
     margin: 0;
     margin-bottom: 0; /* Sin espacio adicional en la parte inferior */
-
-
 }
 
-/*NAVBAR no cambiar renato un lol*/
-/* Color del Navbar */
+/* Navbar */
 .navbar.bg-body-tertiary {
     background-color: #021024 !important;
     margin-bottom: 20px; /* Espacio entre el navbar y el contenido */
-
 }
-/* Color del texto del navbar*/
+
+/* Color del texto del navbar */
 .navbar .navbar-nav .nav-link {
     color: white !important;
 }
@@ -29,7 +26,7 @@ body {
     height: auto; /* Mantén la proporción de la imagen */
 }
 
-/*Logo1*/
+/* Logo superior */
 .custom-logo {
     max-width: 250px; /* Ajusta el tamaño máximo del logo */
     width: 50%; /* Hace que el logo sea responsivo */
@@ -37,7 +34,7 @@ body {
     margin: 0 auto; /* Centra el logo horizontalmente */
 }
 
-/*Logo inferior*/
+/* Logo inferior */
 .logo-inferior {
     max-width: 150px; /* Ajusta el tamaño máximo según sea necesario */
     width: auto; /* Asegura que mantenga proporción */
@@ -46,15 +43,13 @@ body {
     display: block;
 }
 
-/*DROPDOWN*/
-/* Cambiar fondo y color de letra en el dropdown */
+/* Dropdown */
 .nav-item.dropdown .dropdown-menu {
     background-color: #5463b3;
 }
 .nav-item.dropdown .dropdown-item {
     color: white;
 }
-/* Cambiar color al pasar el ratón por encima */
 .nav-item.dropdown .dropdown-item:hover {
     background-color: #021024; /* Color ligeramente más oscuro al hover */
 }
@@ -74,43 +69,83 @@ body {
 
 /* TÍTULO */
 .titulo {
-    text-align: center; /* Centra el texto horizontalmente */
-    display: flex; /* Flexbox para facilitar la alineación */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    margin-bottom: 20px; /* Espacio debajo del título */
-    flex-wrap: wrap; /* Permite que los títulos se ajusten en pantallas pequeñas */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .titulo h1 {
-    font-size: 3vw; /* Ajusta el tamaño según el ancho de la pantalla */
+    font-size: 3vw;
     font-weight: bold;
-    color: #00aaff; /* Azul claro para destacar */
-    animation: bombear 1.5s ease-in-out infinite; /* Animación de bombeo */
-    margin-right: 24px; /* Separar el título principal del subtítulo */
-    max-width: 600px; /* Limita el tamaño máximo en pantallas grandes */
+    color: #00aaff;
+    animation: bombear 1.5s ease-in-out infinite;
+    margin-right: 24px;
+    max-width: 600px;
 }
 
 .titulo h2 {
-    font-size: 2vw; /* Ajusta el tamaño según el ancho de la pantalla */
+    font-size: 2vw;
     font-weight: normal;
-    color: #aadfff; /* Azul más suave para complementar */
-    animation: bombear 1.5s ease-in-out infinite; /* Animación de bombeo */
+    color: #aadfff;
+    animation: bombear 1.5s ease-in-out infinite;
 }
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
     .titulo h1 {
-        font-size: 8vw; /* Título más grande en pantallas más pequeñas */
-        margin-right: 0; /* Sin margen para pantallas pequeñas */
+        font-size: 8vw;
+        margin-right: 0;
     }
 
     .titulo h2 {
-        font-size: 5vw; /* Subtítulo ajustado */
+        font-size: 5vw;
     }
 }
 
-/*FOOTER*/
+/* Cards */
+.card {
+    background-color: #021024;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #00aaff;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+.card .btn {
+    background-color: #00aaff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.card .btn:hover {
+    background-color: #0288d1;
+}
+
+/* Footer */
+footer {
+    background-color: #021024;
+    color: white;
+    padding: 30px 0;
+}
 
 footer h5 {
     font-size: 1.25rem;
@@ -129,38 +164,91 @@ footer .list-inline-item {
     margin-right: 15px;
 }
 
-/*LOGIN*/
-/* Contenedor del formulario de inicio de sesión */
-.login-container {
-    padding-bottom: 0;
-
-    padding: 44px; /* Espaciado interno */
-    margin-top: 16px; /* Espaciado superior ajustado */
-    margin-bottom: 0; /* Sin espacio inferior */
+footer ul li a {
+    color: #aadfff;
+    text-decoration: none;
 }
 
-/* Formulario */
-.card {
-    border: none; /* Elimina el borde para un diseño más limpio */
-    margin-bottom: 20px; /* Espacio entre el formulario y el logo */
+footer ul li a:hover {
+    color: #00aaff;
 }
 
-/* Ajustes para pantallas pequeñas */
+footer .list-inline-item {
+    margin-right: 20px;
+}
+
+/* Formulario de búsqueda */
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-outline-success {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn-outline-success:hover {
+    background-color: #218838;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .card-title {
+        font-size: 1.2rem;
+    }
+    .card-text {
+        font-size: 0.9rem;
+    }
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+    }
+}
+
+/* Estilos para logo inferior en móviles */
 @media (max-width: 768px) {
     .logo-inferior {
-        max-width: 150px; /* Tamaño más pequeño en pantallas pequeñas */
-        width: 70%; /* Ajusta el tamaño relativo */
+        max-width: 150px;
+        width: 70%;
     }
-}
-.logo-inferior {
-    max-width: 200px; /* Tamaño máximo del logo */
-    width: 40%; /* Proporción adaptable */
-    height: auto; /* Mantener proporción del logo */
-    margin-top: 10px; /* Espacio pequeño entre el formulario y el logo */
-    margin-bottom: 0; /* Eliminar espacio adicional inferior */
-    display: block; /* Centrado */
 }
 
-    .card-body {
-        padding: 20px; /* Ajusta el relleno para pantallas pequeñas */
-    }
+.logo-inferior {
+    max-width: 200px;
+    width: 40%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: block;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+
+/* Estilos para el contenido del modal */
+.modal-content {
+    background-color: #021024; /* Fondo oscuro para el modal */
+    color: white; /* Texto blanco */
+}
+
+.modal-header .modal-title,
+.modal-body,
+.modal-footer {
+    color: white; /* Asegura que el texto del título, cuerpo y pie del modal sea blanco */
+}
+
+
+/*CARD*/
+.card .img-fluid {
+    width: 100%; /* Asegura que la imagen ocupe el 100% del ancho */
+    height: 100%; /* Asegura que la imagen ocupe el 100% de la altura del contenedor */
+    object-fit: cover; /* Hace que la imagen se recorte si es necesario, para llenar el contenedor sin distorsionarse */
+}
